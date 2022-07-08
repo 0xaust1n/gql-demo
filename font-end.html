@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  async function abc() {
+    const dataObj = {
+      data: {
+        Id: "cf154e05-b589-41e0-aefd-86e1bcccbf34"
+      }
+
+    }
+
+    const queryObj = {
+      query: `query getUser($data: FindUserInput!){
+        getUser(data: $data){
+          status
+          message
+          body{
+            id
+            memberName
+            weight
+            gender
+            birthday
+          }
+        }
+      }
+    `,
+      variables: dataObj
+    }
+    const res = await axios.post('http://localhost:8080/graphql', queryObj)
+    console.log(res.data.data.getUser)
+  }
+
+  async function update() {
+    const dataObj = {
+      data: {
+        id: "cf154e05-b589-41e0-aefd-86e1bcccbf34",
+        memberName: 'fuck',
+        gender: "female"
+      }
+
+    }
+
+    const queryObj = {
+      query: `mutation updateUser($data: UpdateUserInput!){
+        updateUser(data: $data)
+      }
+    `,
+      variables: dataObj
+    }
+    const res = await axios.post('http://localhost:8080/graphql', queryObj)
+    console.log(res.data.data)
+  }
+</script>
+
+</html>
